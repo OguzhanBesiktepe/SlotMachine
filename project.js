@@ -19,7 +19,7 @@ const prompt = require("prompt-sync")();
 
 // function deposit that will prompt the user to enter an amount of money
 const deposit = () => {
-    // while will have this to keep looping untill a valid result is returned from user.
+    // while will have this to keep looping until a valid result is returned from user.
   while (true){
     const depositAmount = prompt("Enter a deposit amount: ")
     const numberDepositAmount = parseFloat(depositAmount); // convert String to a Number
@@ -51,5 +51,24 @@ const getNumberOfLines = () => {
         }
 };
 
-const depositAmount = deposit();
+// Step 3: Collecting a Bet Amount:
+
+//creating a function with parameter (non-constant variable) balance & lines
+// Again this will be similar to Step 2 with some Parameter changes:
+const getBet = (balance, lines) => {
+    while (true){
+        const bet = prompt("Enter the total bet per line: ")
+        const numberBet = parseFloat(bet);
+
+        if(isNaN(numberBet) || numberBet <= 0 || (numberBet > balance / lines)) {
+            console.log("Invalid bet, try again.")
+            } else {
+                return numberBet;
+            }
+        }
+};
+
+// changing this variable to let which is not-constant (changing). We will need a balance for the user to store.
+let balance = deposit(); 
 const numberOfLines = getNumberOfLines();
+const bet = getBet(balance, numberOfLines); //passing 2 parameters
