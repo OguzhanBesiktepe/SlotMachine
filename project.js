@@ -14,6 +14,30 @@
 // This will use the packages we installed earlier requiring node.js
 const prompt = require("prompt-sync")();
 
+//Step 4: Defining our Slot Machine Variables (Global)
+// This is listed at the top so we can change these variables as needed.
+// It will be in an Organized Structure with variables listing different amount for the payouts.
+
+const ROWS = 3; // There will be 3 Rows in this Machine
+const COLS = 3; // There will be 3 Columns in this Machine.
+
+//Creating our Symbols using Objects in JS.
+
+const SYMBOLS_COUNT = {
+    A: 2,
+    B: 4,
+    C: 6,
+    D: 8,
+}
+
+// How much each Symbol is Worth in Value. 
+
+const SYMBOL_VALUES = {
+    A: 5,
+    B: 4,
+    C: 3,
+    D: 2,   
+}
 
 // Step 1: User Depositing Money.
 
@@ -68,7 +92,36 @@ const getBet = (balance, lines) => {
         }
 };
 
+// Step 4 (Continuing): Randomly Spinning the Slot Machine:
+
+const spin = () => { //creating a function called spin
+    const symbols = []; //creating an empty array.
+    
+    //Creating a For Loop that will create 2 constants (symbol and count) which will take notice of our SYMBOL_COUNTS global variables listed previously at the top.
+    for (const [symbol, count]of Object.entries(SYMBOLS_COUNT)){
+        for (let i = 0; i< count; i++){
+            symbols.push(symbol); //insert new element into the array.
+        }
+
+    }
+
+   const reels = []; //Nested Array
+   for (let i = 0; i < COLS; i++){
+        reels.push([]);
+    const reelSymbols = [...symbols];
+        for (let j = 0; j < ROWS; j++) {
+            const randomIndex = Math.floor(Math.random() * reelSymbols.length) //Math.random will grab a random Symbols we have (3) 
+            const selectedSymbol = reelSymbols[randomIndex]; //Then select with our Array
+            reels[i].push(selectedSymbol);
+            reelSymbols.splice(randomIndex, 1);
+        }
+   }
+
+   return reels;
+};
+
 // changing this variable to let which is not-constant (changing). We will need a balance for the user to store.
 let balance = deposit(); 
 const numberOfLines = getNumberOfLines();
 const bet = getBet(balance, numberOfLines); //passing 2 parameters
+const reels = spin();
